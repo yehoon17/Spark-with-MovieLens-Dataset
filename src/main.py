@@ -1,5 +1,5 @@
 from pyspark.sql import SparkSession
-from analysis import top_movies
+from analysis import analyze_top_movies, analyze_user_trands
 
 def main():
     # Initialize SparkSession
@@ -9,9 +9,11 @@ def main():
 
     # Load dataset
     ratings_df = spark.read.csv("data/ratings.csv", header=True, inferSchema=True)
+    movies_df = spark.read.csv("data/movies.csv", header=True, inferSchema=True)
 
-    # Execute top movies analysis
-    top_movies.analyze_top_movies(spark, ratings_df)
+    # Analysis
+    analyze_top_movies(ratings_df, movies_df)
+    # analyze_user_trands(ratings_df)
 
     # Stop SparkSession
     spark.stop()
